@@ -1,0 +1,20 @@
+{
+  "name": "jobbee",
+  "version": "1.0.0",
+  "description": "An API for a job hunting website",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon dev",
+    "prod": "export NODE_ENV=production && nodemon app"
+  },
+  "author": "Patrick Young",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
