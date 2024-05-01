@@ -1,12 +1,17 @@
 const express = require('express');
-const dotenv = require('dotenv')
+const dotenv = require('dotenv');
 
-// Routes
+const connectDatabase = require('./config/database')
 const jobs = require('./routes/jobs')
 
 const app = express();
 
-dotenv.config({ path: './config/config.env' })
+
+const dotenvConfig = dotenv.config({ path: './config/config.env' })
+
+connectDatabase();
+
+app.use(express.json());
 
 app.use('/api/v1', jobs)
 
