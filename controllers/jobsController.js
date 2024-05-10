@@ -104,11 +104,46 @@ const getJob = async (req, res, next) => {
     });
 };
 
+const getStats = async (req, res, next) => {
+
+    const stats = await Job.aggregate([
+        {
+            $match: {
+                $text: { $search: "\"" + req.params.topic + "\"" }
+            }
+        },
+        {
+            $group: {
+                _id: { $toUpper: '$experience' },
+                avgSalary: { $avg: '$salary' },
+                minSalary: { $min: '$salary' },
+                maxSalary: { $max: '$salary' },
+                totalJobs: { $sum: 1 },
+                avgPosition: { $avg: '$positions' }
+            }
+        }
+    ])
+
+    if (!stats) {
+        res.status(404).json({
+            success: false,
+            message: 'No stats found'
+        });
+    }
+
+    res.status(200).json({
+        success: true,
+        message: 'Successfully found stats',
+        data: stats
+    });
+};
+
 module.exports = {
     getJobs,
     createJob,
     getJobsInRadius,
     updateJob,
     deleteJob,
-    getJob
+    getJob,
+    getStats
 }
